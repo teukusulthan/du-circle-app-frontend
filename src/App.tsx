@@ -1,12 +1,16 @@
 import "./App.css";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <p className="flex justify-center items-center text-5xl h-screen w-full">
-        Hello World
-      </p>
-    </>
+    <Routes>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 }
 
