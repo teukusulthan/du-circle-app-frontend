@@ -63,7 +63,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-zinc-200 px-4">
+    <main className="min-h-screen bg-zinc-950 text-zinc-200 px-4">
       <div className="mx-auto w-full max-w-md px-4 py-12 sm:max-w-lg sm:px-6 sm:py-16 lg:max-w-xl lg:px-8">
         <h1 className="mb-2 text-3xl font-semibold text-green-600 select-none sm:text-4xl">
           circle
@@ -87,7 +87,7 @@ export default function RegisterPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
-                className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+                className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                 autoComplete="username"
               />
               {fieldErrors.username && (
@@ -109,7 +109,7 @@ export default function RegisterPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Your full name"
-                className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+                className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                 autoComplete="name"
               />
               {fieldErrors.name && (
@@ -134,7 +134,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+              className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
               autoComplete="email"
             />
             {fieldErrors.email && (
@@ -159,7 +159,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 pr-12 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+                className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 pr-12 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                 autoComplete="new-password"
               />
               <button
@@ -192,7 +192,7 @@ export default function RegisterPage() {
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 pr-12 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+                className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 pr-12 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                 autoComplete="new-password"
               />
               <button

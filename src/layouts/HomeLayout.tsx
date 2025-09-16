@@ -8,13 +8,15 @@ export default function HomeLayout({
 }) {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-200 flex">
-      <div className="flex-[1]">
+      <div className="hidden md:block shrink-0 w-64">
         <Sidebar />
       </div>
 
-      <main className="flex-[2] border-x border-zinc-800">{children}</main>
+      <main className="flex-1 min-w-0 md:border-x md:border-zinc-800">
+        {children}
+      </main>
 
-      <div className="flex-[1.5]">
+      <div className="hidden lg:block shrink-0 w-[340px]">
         <ProfilePanel
           user={{
             name: "Teuku Sulthan",

@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-zinc-200">
+    <main className="min-h-screen bg-zinc-950 text-zinc-200">
       <div className="mx-auto w-full max-w-md px-6 pt-24">
         <h1 className="mb-2 text-4xl font-semibold text-green-600 select-none">
           circle
@@ -65,7 +65,7 @@ export default function Login() {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               placeholder="you@example.com or username"
-              className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+              className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
               required
               autoComplete="username email"
             />
@@ -92,7 +92,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
+              className="w-full rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
               required
               autoComplete="current-password"
             />
