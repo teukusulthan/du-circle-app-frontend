@@ -53,7 +53,7 @@ export default function ProfilePanel({
         </div>
       </div>
 
-      {/*Suggested Users */}
+      {/* Suggested Users */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4">
         <h3 className="font-semibold mb-3">Suggested for you</h3>
         <ul className="space-y-3">

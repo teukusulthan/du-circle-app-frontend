@@ -3,3 +3,8 @@ export type NavItem = {
   icon: React.ElementType;
   label: string;
 };
+
+export type MobileNavItem = {
+  to: string;
+  icon: React.ElementType;
+};

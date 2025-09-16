@@ -1,4 +1,4 @@
-import Sidebar from "../components/Sidebar";
+import { MobileSidebar, Sidebar } from "../components/Sidebar";
 import ProfilePanel from "../components/ProfilePanel";
 
 export default function HomeLayout({
@@ -10,6 +10,10 @@ export default function HomeLayout({
     <div className="min-h-screen bg-zinc-950 text-zinc-200 flex">
       <div className="hidden md:block shrink-0 w-64">
         <Sidebar />
+      </div>
+
+      <div className="flex md:hidden shrink-0">
+        <MobileSidebar />
       </div>
 
       <main className="flex-1 min-w-0 md:border-x md:border-zinc-800">
