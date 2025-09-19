@@ -21,29 +21,15 @@ export default function ThreadsList() {
     })();
   }, []);
 
-  const toggleLike = (id: number) => {
-    setThreads((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? {
-              ...t,
-              isLiked: !t.isLiked,
-              likes: t.isLiked ? t.likes - 1 : t.likes + 1,
-            }
-          : t
-      )
-    );
-  };
-
   if (loading) return <p className="p-4 text-zinc-400">Loading feed…</p>;
-  if (error) return <p className="p-4 text-red-400">{error}</p>;
+  if (error) return <p className="p-4 text-center text-red-400">{error}</p>;
   if (!threads.length)
-    return <p className="p-4 text-zinc-400">No threads yet.</p>;
+    return <p className="p-4 text-center text-zinc-400">No threads yet.</p>;
 
   return (
     <div>
       {threads.map((t) => (
-        <ThreadCard key={t.id} t={t} onToggleLike={toggleLike} />
+        <ThreadCard key={t.id} t={t} />
       ))}
     </div>
   );
