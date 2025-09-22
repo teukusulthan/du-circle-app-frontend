@@ -90,7 +90,7 @@ export default function ThreadCard({ t }: Props) {
           {/* Actions */}
           <div
             className="mt-3 flex items-center gap-6 text-zinc-400 text-sm"
-            onClick={(e) => e.stopPropagation()} // agar klik tombol tidak ikut buka detail
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={handleLike}

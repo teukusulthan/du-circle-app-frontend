@@ -10,4 +10,5 @@ export type Reply = {
     profile_picture?: string | null;
   };
   likes: number;
+  isLiked: boolean;
 };

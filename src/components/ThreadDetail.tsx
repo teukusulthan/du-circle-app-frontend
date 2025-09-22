@@ -5,6 +5,7 @@ import { fetchThreadById, fetchReplies } from "../api/thread";
 import type { Reply } from "../types/reply";
 import type { Thread } from "../types/thread";
 import ReplyForm from "./ReplyForm";
+import { createSocket } from "../utils/socket";
 
 export default function ThreadDetail() {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ export default function ThreadDetail() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!id || Number.isNaN(threadId)) return;
     (async () => {
       try {
         const [t, r] = await Promise.all([
@@ -31,6 +33,44 @@ export default function ThreadDetail() {
         setLoading(false);
       }
     })();
+  }, [threadId, id]);
+
+  const upsertReply = (incoming: Reply) => {
+    setReplies((prev) => {
+      const exist = prev.find((x) => x.id === incoming.id);
+      if (exist)
+        return prev.map((x) =>
+          x.id === incoming.id ? { ...x, ...incoming } : x
+        );
+      return [incoming, ...prev];
+    });
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || !threadId) return;
+    const socket = createSocket(token);
+    socket.emit("join:thread", threadId);
+
+    socket.on("reply:created", (p: any) => {
+      if (Number(p.thread_id) !== threadId) return;
+      const r: Reply = {
+        id: Number(p.id),
+        content: p.content,
+        image: p.image ?? null,
+        created_at: p.created_at,
+        user: p.user,
+        likes: p.likes ?? 0,
+        isLiked: p.isLiked ?? false,
+      };
+      upsertReply(r);
+    });
+
+    return () => {
+      socket.emit("leave:thread", threadId);
+      socket.off("reply:created");
+      socket.disconnect();
+    };
   }, [threadId]);
 
   if (!id || Number.isNaN(threadId))
@@ -52,7 +92,6 @@ export default function ThreadDetail() {
         <h1 className="text-xl font-semibold">Thread</h1>
       </div>
 
-      {/* Main Threads */}
       <div className="mx-2 mb-3 rounded-2xl">
         <ThreadCard t={thread} />
       </div>
@@ -62,7 +101,6 @@ export default function ThreadDetail() {
         currentUser={{ username: "me", profile_picture: null }}
       />
 
-      {/* Replies */}
       <section>
         {replies.length === 0 ? (
           <p className=" text-center py-6 text-sm text-zinc-500">
@@ -82,7 +120,6 @@ export default function ThreadDetail() {
                   alt={r.user.username}
                   className="h-9 w-9 rounded-full object-cover"
                 />
-
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 overflow-hidden">
                     <span className="font-semibold truncate max-w-[45%]">
@@ -95,12 +132,9 @@ export default function ThreadDetail() {
                       {new Date(r.created_at).toLocaleString()}
                     </span>
                   </div>
-
-                  {/* Reply Content */}
                   <div className="mt-1 text-sm text-zinc-300 whitespace-pre-wrap break-words leading-relaxed">
                     {r.content}
                   </div>
-
                   {r.image && (
                     <img
                       src={r.image}
