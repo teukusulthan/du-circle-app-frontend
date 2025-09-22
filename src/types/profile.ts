@@ -1,19 +1,25 @@
+export type Profile = {
+  id: number | string;
+  username: string;
+  name: string;
+  avatar?: string | null;
+  cover_photo?: string | null;
+  bio?: string | null;
+  followers: number;
+  following: number;
+};
+
+export type Suggestion = {
+  id: number | string;
+  username: string;
+  name: string;
+  avatar?: string | null;
+  isFollowing?: boolean;
+};
+
 export type ProfilePanelType = {
-  user: {
-    name: string;
-    username: string;
-    avatar?: string | null;
-    bio?: string | null;
-    following: number;
-    followers: number;
-  };
-  suggestions?: Array<{
-    id: number | string;
-    name: string;
-    username: string;
-    avatar?: string | null;
-    isFollowing?: boolean;
-  }>;
+  user: Profile;
+  suggestions?: Suggestion[];
   onEdit?: () => void;
   onFollowToggle?: (username: string) => void;
 };

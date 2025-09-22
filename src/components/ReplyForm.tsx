@@ -1,24 +1,33 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { createReply } from "../api/thread";
+import { selectMe } from "../store/profileSlice";
+import type { RootState } from "../store";
 
 type User = { username: string; profile_picture?: string | null };
 
 type Props = {
   threadId: number;
-  currentUser?: User;
+  currentUser?: User; // opsional: override user dari Redux
   onPosted?: () => void;
 };
 
 export default function ReplyForm({ threadId, currentUser, onPosted }: Props) {
+  const me = useSelector((s: RootState) => selectMe(s));
+
+  // PRIORITAS: Redux -> prop -> "guest"
+  const username = me?.username ?? currentUser?.username ?? "guest";
+  const profilePic = me?.avatar ?? currentUser?.profile_picture ?? null;
+
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const avatar =
-    currentUser?.profile_picture ||
+    profilePic ||
     `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
-      currentUser?.username || "guest"
+      username
     )}`;
 
   async function submit() {
@@ -42,8 +51,8 @@ export default function ReplyForm({ threadId, currentUser, onPosted }: Props) {
       <div className="flex gap-3">
         <img
           src={avatar}
-          alt="me"
-          className="h-9 w-9 rounded-full ring-1 ring-zinc-800"
+          alt={username}
+          className="h-9 w-9 rounded-full ring-1 ring-zinc-800 object-cover"
         />
         <div className="flex-1">
           <textarea
@@ -54,10 +63,10 @@ export default function ReplyForm({ threadId, currentUser, onPosted }: Props) {
               el.style.height = "0px";
               el.style.height = el.scrollHeight + "px";
             }}
-            placeholder="Type your reply!"
+            placeholder="Type your reply.."
             className="w-full resize-none rounded-md bg-transparent px-2 py-1.5
                        text-zinc-100 placeholder:text-zinc-500 outline-none
-                       focus:ring-2 focus:ring-zinc-700"
+                       focus:ring-2 focus:ring-zinc-900"
             rows={1}
             style={{ overflow: "hidden", minHeight: "44px" }}
           />

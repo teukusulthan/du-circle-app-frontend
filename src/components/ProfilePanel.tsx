@@ -7,6 +7,7 @@ export default function ProfilePanel({
   onEdit,
   onFollowToggle,
 }: ProfilePanelType) {
+  // fallback avatar bila user.avatar null
   const avatar =
     user.avatar ||
     `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
@@ -17,7 +18,19 @@ export default function ProfilePanel({
     <aside className="hidden lg:block sticky top-0 h-screen overflow-auto p-4 space-y-4">
       {/* Profile Card */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60">
-        <div className="h-20 w-full bg-zinc-900 rounded-t-xl" />
+        {/* cover_photo jika tersedia */}
+        <div
+          className="h-20 w-full rounded-t-xl bg-zinc-900"
+          style={
+            user.cover_photo
+              ? {
+                  backgroundImage: `url(${user.cover_photo})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        />
 
         <div className="p-4 pt-0">
           <div className="-mt-8 mb-3 flex items-center gap-3">
@@ -91,7 +104,7 @@ export default function ProfilePanel({
         </ul>
       </div>
 
-      {/*Footer */}
+      {/* Footer */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-xs text-zinc-400">
         <p>Developed by Teuku Sulthan</p>
         <p className="text-zinc-500">

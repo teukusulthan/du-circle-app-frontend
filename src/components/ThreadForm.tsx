@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { createThread } from "../api/thread";
-import { ThreadUser } from "../types/thread";
+import { selectMe } from "../store/profileSlice";
+import type { RootState } from "../store";
+import type { ThreadUser } from "../types/thread";
 
 type Props = {
   onPosted?: () => void;
@@ -8,15 +11,19 @@ type Props = {
 };
 
 export default function ThreadForm({ onPosted, currentUser }: Props) {
+  const me = useSelector((s: RootState) => selectMe(s));
+  const username = currentUser?.username ?? me?.username ?? "guest";
+  const profilePic = currentUser?.profile_picture ?? me?.avatar ?? null;
+
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const avatarUrl =
-    currentUser?.profile_picture ||
+    profilePic ||
     `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
-      currentUser?.username || "guest"
+      username
     )}`;
 
   async function handleSubmit() {
@@ -24,7 +31,7 @@ export default function ThreadForm({ onPosted, currentUser }: Props) {
     setLoading(true);
     setError(null);
     try {
-      await createThread(content, file || undefined); // kirim apa adanya
+      await createThread(content, file || undefined);
       setContent("");
       setFile(null);
       onPosted?.();
@@ -42,7 +49,7 @@ export default function ThreadForm({ onPosted, currentUser }: Props) {
           {/* Avatar */}
           <img
             src={avatarUrl}
-            alt={currentUser?.username || "user"}
+            alt={username}
             className="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-zinc-800"
           />
 
