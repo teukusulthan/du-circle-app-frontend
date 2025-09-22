@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ThreadCard from "./ThreadCard";
 import { fetchThreads } from "../api/thread";
 import type { Thread } from "../types/thread";
 import { createSocket } from "../utils/socket";
+import { setThreads, upsert } from "../store/threadSlice";
+import type { RootState } from "../store";
 
 export default function ThreadsList() {
-  const [threads, setThreads] = useState<Thread[]>([]);
+  const dispatch = useDispatch();
+  const threads = useSelector((s: RootState) => s.threads.items);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,26 +17,14 @@ export default function ThreadsList() {
     (async () => {
       try {
         const data = await fetchThreads(25);
-        setThreads(data);
+        dispatch(setThreads(data));
       } catch (e: any) {
         setError(e?.response?.data?.message || "Failed to load threads");
       } finally {
         setLoading(false);
       }
     })();
-  }, []);
-
-  const upsert = (incoming: Thread) => {
-    setThreads((prev) => {
-      const exist = prev.find((x) => x.id === incoming.id);
-      if (exist) {
-        return prev.map((x) =>
-          x.id === incoming.id ? { ...x, ...incoming } : x
-        );
-      }
-      return [incoming, ...prev];
-    });
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -49,26 +41,27 @@ export default function ThreadsList() {
         id: Number(p.id),
         user: p.user,
         content: p.content,
-        image: p.image_url ?? null,
-        created_at: p.created_at,
-        likes: 0,
-        isLiked: false,
-        reply: 0,
+        image: p.image ?? p.image_url ?? null,
+        created_at: p.created_at ?? p.timestamp,
+        likes: p.likes ?? 0,
+        isLiked: p.isLiked ?? false,
+        reply: p.reply ?? 0,
       };
-      upsert(t);
+      dispatch(upsert(t));
     });
 
     socket.on("thread:updated", (p: any) => {
-      upsert({
+      const t: Thread = {
         id: Number(p.id),
         user: p.user,
         content: p.content,
-        image: p.image_url ?? null,
-        created_at: p.timestamp,
+        image: p.image ?? p.image_url ?? null,
+        created_at: p.created_at ?? p.timestamp,
         likes: p.likes ?? 0,
-        isLiked: false,
-        reply: p.replies ?? 0,
-      } as Thread);
+        isLiked: p.isLiked ?? false,
+        reply: p.reply ?? 0,
+      };
+      dispatch(upsert(t));
     });
 
     return () => {
@@ -76,7 +69,7 @@ export default function ThreadsList() {
       socket.off("thread:updated");
       socket.disconnect();
     };
-  }, []);
+  }, [dispatch]);
 
   if (loading) return <p className="p-4 text-zinc-400">Loading feed…</p>;
   if (error) return <p className="p-4 text-center text-red-400">{error}</p>;
