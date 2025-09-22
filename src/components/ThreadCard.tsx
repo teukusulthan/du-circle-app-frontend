@@ -9,7 +9,7 @@ type Props = { t: Thread };
 export default function ThreadCard({ t }: Props) {
   const [isLiked, setIsLiked] = useState(t.isLiked);
   const [likes, setLikes] = useState(t.likes);
-  const navigate = useNavigate(); // ⬅️ untuk pindah halaman
+  const navigate = useNavigate();
 
   const profilePicture =
     t.user.profile_picture ||
@@ -73,12 +73,12 @@ export default function ThreadCard({ t }: Props) {
             </span>
           </div>
 
-          {/* Konten */}
+          {/* Content */}
           <div className="mt-1 text-sm text-zinc-300 whitespace-pre-wrap break-words leading-relaxed">
             {t.content}
           </div>
 
-          {/* Gambar */}
+          {/* Image */}
           {t.image && (
             <img
               src={t.image}
@@ -102,7 +102,6 @@ export default function ThreadCard({ t }: Props) {
               <span>{likes}</span>
             </button>
 
-            {/* tombol reply juga ke detail */}
             <button
               onClick={() => navigate(`/threads/${t.id}`)}
               className="inline-flex items-center gap-1 hover:text-zinc-200"
