@@ -7,7 +7,6 @@ export default function ProfilePanel({
   onEdit,
   onFollowToggle,
 }: ProfilePanelType) {
-  // fallback avatar bila user.avatar null
   const avatar =
     user.avatar ||
     `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(
@@ -18,7 +17,6 @@ export default function ProfilePanel({
     <aside className="hidden lg:block sticky top-0 h-screen overflow-auto p-4 space-y-4">
       {/* Profile Card */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60">
-        {/* cover_photo jika tersedia */}
         <div
           className="h-20 w-full rounded-t-xl bg-zinc-900"
           style={
