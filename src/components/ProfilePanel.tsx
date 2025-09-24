@@ -16,9 +16,9 @@ export default function ProfilePanel({
   return (
     <aside className="hidden lg:block sticky top-0 h-screen overflow-auto p-4 space-y-4">
       {/* Profile Card */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60">
+      <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40">
         <div
-          className="h-20 w-full rounded-t-xl bg-zinc-900"
+          className="h-20 w-full rounded-t-xl bg-zinc-900/60"
           style={
             user.cover_photo
               ? {
@@ -65,7 +65,7 @@ export default function ProfilePanel({
       </div>
 
       {/* Suggested Users */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4">
+      <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40 p-4">
         <h3 className="font-semibold mb-3">Suggested for you</h3>
         <ul className="space-y-3">
           {suggestions.map((s) => {
@@ -103,7 +103,7 @@ export default function ProfilePanel({
       </div>
 
       {/* Footer */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-xs text-zinc-400">
+      <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40 p-4 text-xs text-zinc-400">
         <p>Developed by Teuku Sulthan</p>
         <p className="text-zinc-500">
           © 2025 Teuku Sulthan • All rights reserved

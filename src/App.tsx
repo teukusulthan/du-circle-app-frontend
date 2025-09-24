@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ThreadDetail from "./components/ThreadDetail";
 import Follow from "./pages/Follow";
+import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -18,21 +20,20 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Protected + Layout (punya path "/") */}
+        {/* Protected + Layout */}
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<HomeLayout />}>
-            {/* index untuk "/" → redirect ke /home (atau langsung taruh <Home/> di index) */}
             <Route index element={<Navigate to="home" replace />} />
 
-            {/* Anak-anak pakai path RELATIF (tanpa leading "/") */}
             <Route path="home" element={<Home />} />
             <Route path="threads/:id" element={<ThreadDetail />} />
             <Route path="follows" element={<Follow />} />
+            <Route path="/search" element={<Search />} />
           </Route>
         </Route>
 
         {/* Fallback */}
-        <Route path="*" element={<div className="p-6">Not Found</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

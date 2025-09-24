@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import FollowItem from "../components/FollowItem";
 import { listFollows, followUser, unfollowUser } from "../api/follow";
 import type { FollowsTab, FollowUser } from "../types/follow";
+import { User } from "lucide-react";
 
-export default function FollowsPage() {
+export default function Follows() {
   const [tab, setTab] = useState<FollowsTab>("followers");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -112,12 +113,16 @@ export default function FollowsPage() {
           </div>
 
           {/* Search */}
-          <div className="px-2 pb-3">
+          <div className="relative my-4">
+            <User
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
+              size={20}
+            />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search people..."
-              className="mt-4 w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 outline-none focus:border-zinc-600"
+              placeholder="Search user..."
+              className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-xl pl-10 pr-3 py-2 outline-none focus:border-zinc-600"
             />
           </div>
         </div>
