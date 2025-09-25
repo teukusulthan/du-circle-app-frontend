@@ -6,6 +6,7 @@ export default function ProfilePanel({
   suggestions = [],
   onEdit,
   onFollowToggle,
+  mode = "default",
 }: ProfilePanelType) {
   const avatar =
     user.avatar ||
@@ -16,53 +17,55 @@ export default function ProfilePanel({
   return (
     <aside className="hidden lg:block sticky top-0 h-screen overflow-auto p-4 space-y-4">
       {/* Profile Card */}
-      <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40">
-        <div
-          className="h-20 w-full rounded-t-xl bg-zinc-900/60"
-          style={
-            user.banner
-              ? {
-                  backgroundImage: `url(${user.banner})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
-              : undefined
-          }
-        />
+      {mode !== "suggestions-only" && (
+        <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40">
+          <div
+            className="h-20 w-full rounded-t-xl bg-zinc-900/60"
+            style={
+              user.banner
+                ? {
+                    backgroundImage: `url(${user.banner})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }
+                : undefined
+            }
+          />
+          <div className="p-4 pt-0">
+            <div className="-mt-8 mb-3 flex items-center gap-3">
+              <img
+                src={avatar}
+                alt={user.username}
+                className="h-16 w-16 rounded-full border-2 border-zinc-900 object-cover"
+              />
+              <button
+                onClick={onEdit}
+                className="ml-auto flex items-center cursor-pointer hover:bg-zinc-900/80 hover:text-white transition-all duration-300  gap-1 rounded-full bg-zinc-100 text-zinc-900 px-3 py-1 text-sm font-semibold hover:bg-zinc-300"
+              >
+                <Pencil size={16} />
+                Edit
+              </button>
+            </div>
 
-        <div className="p-4 pt-0">
-          <div className="-mt-8 mb-3 flex items-center gap-3">
-            <img
-              src={avatar}
-              alt={user.username}
-              className="h-16 w-16 rounded-full border-2 border-zinc-900 object-cover"
-            />
+            <p className="text-lg font-semibold text-zinc-100">{user.name}</p>
+            <p className="text-sm text-zinc-400">@{user.username}</p>
+            {user.bio && (
+              <p className="mt-2 text-sm text-zinc-300">{user.bio}</p>
+            )}
 
-            <button
-              onClick={onEdit}
-              className="ml-auto flex items-center cursor-pointer hover:bg-zinc-900/80 hover:text-white transition-all duration-300  gap-1 rounded-full bg-zinc-100 text-zinc-900 px-3 py-1 text-sm font-semibold hover:bg-zinc-300"
-            >
-              <Pencil size={16} />
-              Edit
-            </button>
-          </div>
-
-          <p className="text-lg font-semibold text-zinc-100">{user.name}</p>
-          <p className="text-sm text-zinc-400">@{user.username}</p>
-          {user.bio && <p className="mt-2 text-sm text-zinc-300">{user.bio}</p>}
-
-          <div className="mt-3 flex gap-4 text-sm text-zinc-300">
-            <span>
-              <strong className="text-zinc-100">{user.following}</strong>{" "}
-              Following
-            </span>
-            <span>
-              <strong className="text-zinc-100">{user.followers}</strong>{" "}
-              Followers
-            </span>
+            <div className="mt-3 flex gap-4 text-sm text-zinc-300">
+              <span>
+                <strong className="text-zinc-100">{user.following}</strong>{" "}
+                Following
+              </span>
+              <span>
+                <strong className="text-zinc-100">{user.followers}</strong>{" "}
+                Followers
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Suggested Users */}
       <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40 p-4">
@@ -85,7 +88,6 @@ export default function ProfilePanel({
                     <p className="text-xs text-zinc-500">@{s.username}</p>
                   </div>
                 </div>
-
                 <button
                   onClick={() => onFollowToggle?.(s.username)}
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { MobileSidebar, Sidebar } from "../components/Sidebar";
 import ProfilePanel from "../components/ProfilePanel";
 import EditProfile from "../components/EditProfile";
@@ -20,6 +20,8 @@ export default function HomeLayout({
   const dispatch = useDispatch<AppDispatch>();
   const me = useSelector((s: RootState) => selectMe(s));
   const status = useSelector((s: RootState) => selectProfileStatus(s));
+  const location = useLocation();
+  const isMyProfileRoute = location.pathname === "/me";
 
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -77,6 +79,7 @@ export default function HomeLayout({
               onFollowToggle={(username) => {
                 console.log("Toggle follow:", username);
               }}
+              mode={isMyProfileRoute ? "suggestions-only" : "default"}
             />
             <EditProfile
               open={openEdit}

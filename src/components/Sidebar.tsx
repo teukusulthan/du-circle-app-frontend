@@ -55,7 +55,7 @@ export function Sidebar() {
         <NavItem to="/home" icon={Home} label="Home" />
         <NavItem to="/search" icon={Search} label="Search" />
         <NavItem to="/follows" icon={Heart} label="Follows" />
-        <NavItem to="/profile" icon={User} label="Profile" />
+        <NavItem to="/me" icon={User} label="Profile" />
       </nav>
 
       <Link
@@ -104,7 +104,7 @@ export function MobileSidebar() {
         <MobileNavItem to="/home" icon={HomeIcon} />
         <MobileNavItem to="/search" icon={Search} />
         <MobileNavItem to="/follows" icon={Heart} />
-        <MobileNavItem to="/profile" icon={User} />
+        <MobileNavItem to="/me" icon={User} />
       </nav>
     </aside>
   );

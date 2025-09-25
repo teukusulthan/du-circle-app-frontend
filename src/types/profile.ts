@@ -22,4 +22,5 @@ export type ProfilePanelType = {
   suggestions?: Suggestion[];
   onEdit?: () => void;
   onFollowToggle?: (username: string) => void;
+  mode?: "default" | "suggestions-only";
 };

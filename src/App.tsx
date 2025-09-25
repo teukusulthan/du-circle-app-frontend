@@ -11,6 +11,7 @@ import ThreadDetail from "./components/ThreadDetail";
 import Follow from "./pages/Follow";
 import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="threads/:id" element={<ThreadDetail />} />
             <Route path="follows" element={<Follow />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/me" element={<MyProfile />} />
           </Route>
         </Route>
 
