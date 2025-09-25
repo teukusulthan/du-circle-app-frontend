@@ -20,9 +20,9 @@ export default function ProfilePanel({
         <div
           className="h-20 w-full rounded-t-xl bg-zinc-900/60"
           style={
-            user.cover_photo
+            user.banner
               ? {
-                  backgroundImage: `url(${user.cover_photo})`,
+                  backgroundImage: `url(${user.banner})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }

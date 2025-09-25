@@ -3,7 +3,7 @@ export type Profile = {
   username: string;
   name: string;
   avatar?: string | null;
-  cover_photo?: string | null;
+  banner: string | null;
   bio?: string | null;
   followers: number;
   following: number;
