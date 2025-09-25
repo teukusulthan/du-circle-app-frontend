@@ -12,6 +12,9 @@ import type {
   NavItem as NavItemType,
   MobileNavItem as MobileNavItemType,
 } from "../types/sidebar";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../store";
+import { logout } from "../store/authSlice";
 
 function NavItem({ to, icon: Icon, label }: NavItemType) {
   const active = useLocation().pathname === to;
@@ -35,13 +38,13 @@ function NavItem({ to, icon: Icon, label }: NavItemType) {
 
 export function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogout = () => {
-    // Hapus token dan data user dari localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    // Redirect ke halaman login
-    navigate("/login");
+    dispatch(logout());
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -81,7 +84,7 @@ function MobileNavItem({ to, icon: Icon }: MobileNavItemType) {
   return (
     <Link
       to={to}
-      className={`flex py-4 rounded-md flex-1 justify-center items-center gap-3 px-4 py-2 
+      className={`flex rounded-md flex-1 justify-center items-center gap-3 px-4 py-4 
         transition-colors
         ${
           active
