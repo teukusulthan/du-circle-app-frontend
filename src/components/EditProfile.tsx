@@ -8,6 +8,7 @@ type Props = {
   initial: {
     name: string;
     username: string;
+    bio: string | null;
     avatar: string | null;
     banner: string | null;
   };
@@ -34,6 +35,10 @@ export default function EditProfile({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [bio, setBio] = useState<string>(
+    ((initial as any)?.bio as string) ?? ""
+  );
+
   useEffect(() => {
     if (open) {
       setName(initial.name);
@@ -43,6 +48,7 @@ export default function EditProfile({
       setAvatarPreview(initial.avatar ?? null);
       setBannerPreview(initial.banner ?? null);
       setError(null);
+      setBio(((initial as any)?.bio as string) ?? "");
     }
   }, [open, initial]);
 
@@ -58,6 +64,8 @@ export default function EditProfile({
         username: username !== initial.username ? username : undefined,
         profile_photo: avatarFile,
         banner_photo: bannerFile,
+        bio:
+          bio !== (((initial as any)?.bio as string) ?? "") ? bio : undefined,
       });
       onSuccess?.();
       onClose();
@@ -254,6 +262,19 @@ export default function EditProfile({
                 <p className="mt-1 text-xs text-zinc-500">
                   3–20 characters, unique.
                 </p>
+              </div>
+
+              {/* NEW: Bio */}
+              <div>
+                <label className="block text-sm text-zinc-400 mb-1">Bio</label>
+                <textarea
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="w-full min-h-[88px] rounded-xl bg-zinc-900/60 border border-zinc-800/40 px-4 py-2 text-zinc-200 placeholder-zinc-500 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition resize-y"
+                  placeholder="Tell people about yourself..."
+                  maxLength={200}
+                />
+                <p className="mt-1 text-xs text-zinc-500">{bio.length}/200</p>
               </div>
 
               {error && <p className="text-sm text-red-400">{error}</p>}

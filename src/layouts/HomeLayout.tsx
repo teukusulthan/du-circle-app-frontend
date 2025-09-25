@@ -87,6 +87,7 @@ export default function HomeLayout({
               initial={{
                 name: me.name,
                 username: me.username,
+                bio: me.bio ?? null,
                 avatar: me.avatar ?? null,
                 banner: me.banner ?? null,
               }}

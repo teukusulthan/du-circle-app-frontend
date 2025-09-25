@@ -43,12 +43,14 @@ export async function updateMyProfile(data: {
   name?: string;
   username?: string;
   profile_photo?: File | null;
+  bio?: string;
   banner_photo?: File | null;
 }) {
   const token = localStorage.getItem("token");
   const fd = new FormData();
   if (data.name) fd.append("name", data.name);
   if (data.username) fd.append("username", data.username);
+  if (data.bio !== undefined) fd.append("bio", data.bio);
   if (data.profile_photo) fd.append("profile_photo", data.profile_photo);
   if (data.banner_photo) fd.append("banner_photo", data.banner_photo);
 
