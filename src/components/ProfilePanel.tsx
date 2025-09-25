@@ -40,7 +40,7 @@ export default function ProfilePanel({
 
             <button
               onClick={onEdit}
-              className="ml-auto flex items-center gap-1 rounded-full bg-zinc-100 text-zinc-900 px-3 py-1 text-sm font-semibold hover:bg-zinc-300"
+              className="ml-auto flex items-center cursor-pointer hover:bg-zinc-900/80 hover:text-white transition-all duration-300  gap-1 rounded-full bg-zinc-100 text-zinc-900 px-3 py-1 text-sm font-semibold hover:bg-zinc-300"
             >
               <Pencil size={16} />
               Edit

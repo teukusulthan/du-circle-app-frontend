@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { MobileSidebar, Sidebar } from "../components/Sidebar";
 import ProfilePanel from "../components/ProfilePanel";
+import EditProfile from "../components/EditProfile";
 import {
   loadMyProfile,
   selectMe,
@@ -19,6 +20,8 @@ export default function HomeLayout({
   const dispatch = useDispatch<AppDispatch>();
   const me = useSelector((s: RootState) => selectMe(s));
   const status = useSelector((s: RootState) => selectProfileStatus(s));
+
+  const [openEdit, setOpenEdit] = useState(false);
 
   useEffect(() => {
     const hasToken = !!localStorage.getItem("token");
@@ -66,14 +69,29 @@ export default function HomeLayout({
             </div>
           </aside>
         ) : me ? (
-          <ProfilePanel
-            user={me}
-            suggestions={suggestions}
-            onEdit={() => {}}
-            onFollowToggle={(username) => {
-              console.log("Toggle follow:", username);
-            }}
-          />
+          <>
+            <ProfilePanel
+              user={me}
+              suggestions={suggestions}
+              onEdit={() => setOpenEdit(true)}
+              onFollowToggle={(username) => {
+                console.log("Toggle follow:", username);
+              }}
+            />
+            <EditProfile
+              open={openEdit}
+              onClose={() => setOpenEdit(false)}
+              initial={{
+                name: me.name,
+                username: me.username,
+                avatar: me.avatar ?? null,
+                banner: me.banner ?? null,
+              }}
+              onSuccess={() => {
+                dispatch(loadMyProfile());
+              }}
+            />
+          </>
         ) : null}
       </div>
     </div>

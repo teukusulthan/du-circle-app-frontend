@@ -52,7 +52,7 @@ export async function updateMyProfile(data: {
   if (data.profile_photo) fd.append("profile_photo", data.profile_photo);
   if (data.banner_photo) fd.append("banner_photo", data.banner_photo);
 
-  return axios.patch(`${API_BASE}/api/v1/users/me`, fd, {
+  return axios.patch(`${API_BASE}/api/v1/auth/me`, fd, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
